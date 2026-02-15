@@ -3,699 +3,425 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Modern System Design: 52-Week Learning Path</title>
+  <title>System Design 52 Weeks</title>
   <style>
-    :root { color-scheme: light; }
-    body { margin: 0; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; background: #f7f7f5; color: #1d1d1f; }
-    header { padding: 32px 24px 8px; }
-    main { padding: 0 24px 32px; max-width: 1000px; }
-    h1 { font-size: 24px; margin: 0 0 8px; }
-    p { margin: 0 0 16px; }
-    pre { background: #fff; padding: 20px; border-radius: 8px; overflow: auto; line-height: 1.5; box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
-    a { color: #0b5fff; }
+    @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap");
+
+    :root {
+      color-scheme: light;
+      --bg: #f3f1ed;
+      --ink: #151515;
+      --muted: #6a6a6a;
+      --card: #ffffff;
+      --line: #e5e1db;
+      --accent: #2f6bff;
+      --accent-soft: #e7efff;
+      --progress: #1f8a3b;
+      --project: #ff7a59;
+      --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      padding: 28px 20px;
+      background: #f9f8f6;
+      border-right: 1px solid var(--line);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .brand-badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--accent);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .nav {
+      margin-top: 28px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: var(--ink);
+      padding: 10px 12px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    .nav a.active {
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .content {
+      padding: 28px 36px 48px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .title-block h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .title-block p {
+      margin: 8px 0 0;
+      color: var(--muted);
+    }
+
+    .progress-wrap {
+      background: var(--card);
+      padding: 16px;
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      min-width: 260px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .progress-bar {
+      height: 10px;
+      border-radius: 999px;
+      background: #ece7e0;
+      overflow: hidden;
+    }
+
+    .progress-bar span {
+      display: block;
+      height: 100%;
+      background: var(--progress);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+      display: grid;
+      gap: 12px;
+      border: 1px solid #f1ede7;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .card small {
+      color: var(--muted);
+    }
+
+    .module-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .pill {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #f3f0ea;
+      color: var(--muted);
+    }
+
+    .checklist {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .checklist label {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 8px;
+      align-items: start;
+      font-size: 14px;
+    }
+
+    .project {
+      border-left: 4px solid var(--project);
+      padding: 10px 12px;
+      background: #fff5f0;
+      border-radius: 12px;
+      font-size: 13px;
+    }
+
+    .module-progress {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .module-progress .bar {
+      height: 6px;
+      border-radius: 999px;
+      background: #efe9e1;
+      overflow: hidden;
+      flex: 1;
+    }
+
+    .module-progress .bar span {
+      display: block;
+      height: 100%;
+      background: var(--accent);
+      width: 0%;
+    }
+
+    .footer {
+      margin-top: 28px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 900px) {
+      .shell { grid-template-columns: 1fr; }
+      .sidebar { border-right: none; border-bottom: 1px solid var(--line); }
+      .topbar { flex-direction: column; align-items: flex-start; }
+    }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Modern System Design: 52-Week Learning Path</h1>
-    <p>Source markdown: <a href="curriculum.md">curriculum.md</a></p>
-  </header>
-  <main>
-    <pre># Modern System Design: 52-Week Learning Path
-
-## Verification approach
-I will only include factual claims that I can verify from primary sources (official documentation, standards, RFCs, or first‑party vendor documentation). Each factual claim will carry a citation. If a claim cannot be verified, I will mark it “Not verified” during drafting and exclude it from the curriculum. For version drift, I will cite the exact page used for each resource and prefer pages that show a version or last‑updated date. If a resource does not publish a date, I will list it as “n.d.” and avoid date claims. When multiple vendors exist for a domain, I will list the major players and justify relevance using their official documentation. Any item without a verifiable, accessible source will be excluded.
-
-## Module map (12 modules + 4 interleaved review/capstone weeks)
-
-### Module 1 (Weeks 1–4): Performance, Latency, And Protocol Foundations
-Outcomes
-- Derive a latency budget for an HTTP API using HTTP semantics and caching terminology from RFC 9110. citeturn0search3
-- Explain OAuth 2.0 roles and flows using RFC 6749 terminology. citeturn0search1
-- Define metrics collection concepts using Prometheus’s overview. citeturn14view0
-
-Core concepts
-- HTTP semantics and caching (RFC 9110). citeturn0search3
-- OAuth 2.0 authorization framework (RFC 6749). citeturn0search1
-- Metrics and time series monitoring (Prometheus overview). citeturn14view0
-
-Hands‑on build project
-- Implement and benchmark a minimal HTTP API and document latency budgets and auth flows, mapping terminology to RFC 9110 and RFC 6749. citeturn0search3turn0search1
-
-Assessment checklist
-- Latency budget table tied to RFC 9110 terms. citeturn0search3
-- OAuth 2.0 flow diagram referencing RFC 6749 roles. citeturn0search1
-- Metrics definitions aligned with Prometheus terminology. citeturn14view0
-
-Major players and ecosystems (why relevant)
-- IETF RFC 9110 defines HTTP semantics used in system design. citeturn0search3
-- IETF RFC 6749 defines OAuth 2.0 authorization framework used in modern auth flows. citeturn0search1
-- Prometheus provides a monitoring and alerting toolkit for metrics. citeturn14view0
-
-### Module 2 (Weeks 5–8): Cloud Architecture And Networking
-Outcomes
-- Map architecture decisions to cloud well‑architected pillars across major hyperscalers. citeturn3search7turn2search1turn1search1
-- Produce a cloud network boundary diagram aligned to well‑architected guidance. citeturn3search7turn2search1turn1search1
-
-Core concepts
-- Well‑architected pillars and tradeoffs. citeturn3search7turn2search1turn1search1
-- Reliability, security, performance, and cost considerations at cloud scale. citeturn3search7turn2search1turn1search1
-
-Hands‑on build project
-- Create a well‑architected review checklist and apply it to a sample workload. citeturn3search7turn2search1turn1search1
-
-Assessment checklist
-- Pillar‑aligned review with risks and mitigations. citeturn3search7turn2search1turn1search1
-- Architecture diagram annotated with pillar tradeoffs. citeturn3search7turn2search1turn1search1
-
-Major players and ecosystems (why relevant)
-- AWS Well‑Architected Framework pillars (AWS). citeturn3search7
-- Azure Well‑Architected Framework pillars (Microsoft). citeturn2search1
-- Google Cloud Well‑Architected Framework pillars (Google Cloud). citeturn1search1
-
-### Module 3 (Weeks 9–12): Distributed Systems Foundations
-Outcomes
-- Explain core distributed systems topics such as coordination, replication, and fault tolerance. citeturn22search2
-- Summarize consistency and failure tradeoffs using canonical distributed systems text. citeturn22search2
-
-Core concepts
-- Coordination, replication, and fault tolerance. citeturn22search2
-
-Hands‑on build project
-- Write a design note comparing replication strategies for a key‑value store, using the Distributed Systems (3rd ed.) structure. citeturn22search2
-
-Assessment checklist
-- Failure model and replication choice with tradeoffs. citeturn22search2
-
-Major players and ecosystems (why relevant)
-- Distributed Systems (3rd ed.) provides foundational coverage of architectures, coordination, replication, and fault tolerance. citeturn22search2
-
-### Review/Capstone Week A (Week 13)
-- Review Modules 1–3 and complete a longer design kata using resources cited in Modules 1–3. citeturn0search3turn0search1turn14view0turn3search7turn2search1turn1search1turn22search2
-
-### Module 4 (Weeks 14–17): Data Systems
-Outcomes
-- Select storage models using a canonical data systems text and vendor docs. citeturn22search0turn5search4turn17search0turn17search1turn15search1turn18view0
-- Explain tradeoffs across relational, document, wide‑column, and in‑memory systems. citeturn22search0turn5search4turn17search1turn15search1turn18view0
-
-Core concepts
-- Data models and tradeoffs (DDIA). citeturn22search0
-- Relational systems (PostgreSQL, MySQL). citeturn5search4turn17search0
-- Document databases (MongoDB). citeturn17search1
-- Wide‑column systems (Apache Cassandra). citeturn15search1
-- In‑memory data structures and caching (Redis). citeturn18view0
-
-Hands‑on build project
-- Design a storage layer for a multi‑tenant SaaS workload with schema and index rationale. citeturn22search0turn5search4turn17search0turn17search1turn15search1turn18view0
-
-Assessment checklist
-- Storage decision matrix mapped to vendor capabilities and DDIA tradeoffs. citeturn22search0turn5search4turn17search0turn17search1turn15search1turn18view0
-
-Major players and ecosystems (why relevant)
-- PostgreSQL official documentation (relational database). citeturn5search4
-- MySQL 8.0 Reference Manual (relational database). citeturn17search0
-- MongoDB documentation (document database). citeturn17search1
-- Apache Cassandra documentation (wide‑column database). citeturn15search1
-- Redis documentation (in‑memory data structures and caching). citeturn18view0
-
-### Module 5 (Weeks 18–21): Event Streaming And Messaging
-Outcomes
-- Design an event streaming pipeline with durability and replay. citeturn6search1turn19search4
-- Compare brokered messaging and streaming systems across major projects. citeturn6search1turn19search4turn19search1turn19search2
-
-Core concepts
-- Event streaming with Kafka. citeturn6search1
-- Distributed messaging with Pulsar. citeturn19search4
-- Brokered messaging with RabbitMQ. citeturn19search1
-- Lightweight messaging and JetStream with NATS. citeturn19search2
-
-Hands‑on build project
-- Implement a basic event pipeline and document retention and replay strategy. citeturn6search1turn19search4
-
-Assessment checklist
-- Pipeline diagram with delivery guarantees and retention plan. citeturn6search1turn19search4
-
-Major players and ecosystems (why relevant)
-- Apache Kafka documentation and quickstart (event streaming). citeturn6search1
-- Apache Pulsar documentation (messaging + streaming). citeturn19search4
-- RabbitMQ documentation (brokered messaging). citeturn19search1
-- NATS documentation (cloud‑native messaging and JetStream). citeturn19search2
-
-### Module 6 (Weeks 22–25): Kubernetes And Cloud‑Native Foundations
-Outcomes
-- Describe Kubernetes objects and cluster architecture. citeturn0search4
-- Explain observability signals and telemetry pipelines in cloud‑native systems. citeturn0search0turn5search3turn5search2
-
-Core concepts
-- Kubernetes concepts and APIs. citeturn0search4
-- Metrics, traces, and logs in cloud‑native observability. citeturn0search0turn5search3turn5search2
-
-Hands‑on build project
-- Deploy a stateless service to Kubernetes and outline telemetry collection. citeturn0search4turn0search0turn5search3
-
-Assessment checklist
-- Kubernetes manifests and a telemetry plan. citeturn0search4turn0search0turn5search3
-
-Major players and ecosystems (why relevant)
-- Kubernetes documentation for orchestration. citeturn0search4
-- Prometheus CNCF project page (metrics). citeturn4search1
-- OpenTelemetry CNCF project page (telemetry standardization). citeturn4search0
-- Envoy CNCF graduation announcement (service proxy/mesh ecosystem). citeturn3search0
-
-### Review/Capstone Week B (Week 26)
-- Review Modules 4–6 and complete a longer design kata using resources cited in Modules 4–6. citeturn22search0turn5search4turn17search0turn17search1turn15search1turn18view0turn6search1turn19search4turn19search1turn19search2turn0search4turn0search0turn5search3
-
-### Module 7 (Weeks 27–30): Observability Systems
-Outcomes
-- Design metrics, logs, and traces pipelines using OpenTelemetry and Prometheus. citeturn0search0turn5search3turn5search2turn14view0
-- Compare observability vendor offerings at a high level using official docs. citeturn12search8turn10search2turn12search2turn11search1turn10search0
-
-Core concepts
-- OpenTelemetry documentation and specification. citeturn0search0turn5search3
-- OTLP protocol. citeturn5search2
-- Prometheus monitoring overview. citeturn14view0
-- Grafana visualization platform. citeturn11search1
-
-Hands‑on build project
-- Instrument a service and document telemetry schema and export pipeline. citeturn0search0turn5search3turn5search2
-
-Assessment checklist
-- Traces, metrics, and logs schema definitions. citeturn0search0turn5search3
-- OTLP export plan. citeturn5search2
-
-Major players and ecosystems (why relevant)
-- OpenTelemetry documentation (vendor‑neutral telemetry). citeturn0search0
-- Prometheus overview (metrics). citeturn14view0
-- Grafana documentation (visualization). citeturn11search1
-- Datadog documentation (commercial observability). citeturn12search8
-- New Relic documentation (commercial observability). citeturn10search2
-- Splunk documentation portal (observability product docs). citeturn12search2
-- Honeycomb documentation (observability). citeturn10search0
-
-### Module 8 (Weeks 31–34): Reliability Engineering And SRE
-Outcomes
-- Define SLOs and error budgets using SRE guidance. citeturn21search0turn21search1
-- Draft incident response and postmortem artifacts. citeturn21search0turn21search1
-
-Core concepts
-- SRE principles and practices. citeturn21search0
-- Practical SRE methods and case studies. citeturn21search1
-
-Hands‑on build project
-- Write SLOs for a sample service and create an incident postmortem template. citeturn21search0turn21search1
-
-Assessment checklist
-- SLO spec and error budget policy. citeturn21search0
-- Postmortem with action items. citeturn21search1
-
-Major players and ecosystems (why relevant)
-- Site Reliability Engineering book (Google SRE canonical text). citeturn21search0
-- The Site Reliability Workbook (hands‑on SRE companion). citeturn21search1
-- Google SRE resources hub (official SRE library). citeturn21search3
-
-### Review/Capstone Week C (Week 39)
-- Review Modules 7–8 and complete a longer design kata using resources cited in Modules 7–8. citeturn0search0turn5search3turn5search2turn14view0turn11search1turn12search8turn10search2turn12search2turn10search0turn21search0turn21search1
-
-### Module 9 (Weeks 40–43): Security Engineering And Identity
-Outcomes
-- Apply OAuth 2.0 concepts to system design. citeturn0search1
-- Compare identity provider capabilities using official docs. citeturn9search0turn9search1turn9search4
-
-Core concepts
-- OAuth 2.0 authorization framework. citeturn0search1
-- Security engineering principles (Security Engineering 3rd ed.). citeturn24search2
-- Identity provider fundamentals (Entra ID, Auth0, Okta). citeturn9search0turn9search1turn9search4
-
-Hands‑on build project
-- Threat‑model a service and define authn/authz flows with OAuth 2.0 terminology. citeturn0search1
-
-Assessment checklist
-- OAuth flow diagram and token lifecycle notes. citeturn0search1
-- Threat model summary referencing Security Engineering 3rd ed. citeturn24search2
-
-Major players and ecosystems (why relevant)
-- Microsoft Entra ID documentation (enterprise identity and access). citeturn9search0
-- Auth0 documentation (developer‑focused identity platform). citeturn9search1
-- Okta developer documentation (identity APIs). citeturn9search4
-- Security Engineering 3rd ed. (canonical security engineering text). citeturn24search2
-
-### Module 10 (Weeks 44–47): Platform Engineering, Edge, And Delivery
-Outcomes
-- Explain edge network platforms and their developer docs. citeturn7search9turn8search3turn8search2
-- Draft a delivery and edge integration plan using vendor docs. citeturn7search9turn8search3turn8search2
-
-Core concepts
-- Edge platform documentation and APIs. citeturn7search9turn8search3turn8search2
-
-Hands‑on build project
-- Write an edge delivery plan and API integration outline using vendor docs. citeturn7search9turn8search3turn8search2
-
-Assessment checklist
-- Edge architecture notes and API integration plan. citeturn7search9turn8search3turn8search2
-
-Major players and ecosystems (why relevant)
-- Cloudflare developer documentation (edge platform). citeturn7search9
-- Fastly documentation (edge delivery and compute). citeturn8search3
-- Akamai TechDocs (edge services documentation). citeturn8search2
-
-### Module 11 (Weeks 48–51): Cost And Capacity Planning
-Outcomes
-- Produce a capacity and cost plan aligned to well‑architected pillars. citeturn3search7turn2search1turn1search1turn1search4
-- Document tradeoffs between cost, reliability, and performance. citeturn3search7turn2search1turn1search1turn1search4
-
-Core concepts
-- Cost optimization pillar in AWS WAF. citeturn1search4
-- Well‑architected pillars across hyperscalers. citeturn3search7turn2search1turn1search1
-
-Hands‑on build project
-- Build a cost model and capacity plan for a multi‑region service. citeturn3search7turn2search1turn1search1turn1search4
-
-Assessment checklist
-- Cost model with unit economics. citeturn1search4
-- Capacity thresholds linked to pillar tradeoffs. citeturn3search7turn2search1turn1search1
-
-Major players and ecosystems (why relevant)
-- AWS Well‑Architected pillars (including cost optimization). citeturn3search7turn1search4
-- Azure Well‑Architected pillars. citeturn2search1
-- Google Cloud Well‑Architected pillars. citeturn1search1
-
-### Module 12 (Weeks 52–55): AI Systems Design And Evaluation
-Outcomes
-- Design an AI‑enabled service with evaluation and guardrails based on official AI provider docs. citeturn25search2turn27search5turn26search0turn26search1
-- Select a vector database and retrieval strategy from official vector DB docs. citeturn27search0turn27search2turn28search0turn28search1
-
-Core concepts
-- AI model provider APIs and documentation (OpenAI, Anthropic, Gemini, Bedrock). citeturn25search2turn27search5turn26search0turn26search1
-- Vector database options for RAG. citeturn27search0turn27search2turn28search0turn28search1
-
-Hands‑on build project
-- Design a RAG service with evaluation harness and audit logging. citeturn27search0turn27search2turn28search0turn28search1
-
-Assessment checklist
-- Evaluation plan tied to provider docs. citeturn25search2turn27search5turn26search0turn26search1
-- Vector database choice rationale. citeturn27search0turn27search2turn28search0turn28search1
-
-Major players and ecosystems (why relevant)
-- OpenAI API models documentation. citeturn25search2
-- Anthropic API documentation. citeturn27search5
-- Gemini API documentation. citeturn26search0
-- Amazon Bedrock documentation. citeturn26search1
-- Pinecone documentation (vector DB). citeturn27search0
-- Weaviate documentation (vector DB). citeturn27search2
-- Milvus documentation (vector DB). citeturn28search0
-- pgvector repository (Postgres vector extension). citeturn28search1
-
-### Review/Capstone Week D (Week 56)
-- Capstone 1: Production‑style service with observability, SLOs, security, and cost notes using prior modules. citeturn0search0turn5search3turn21search0turn24search2turn1search4
-- Capstone 2: AI‑enabled service with evaluation harness and audit logging using Module 12 resources. citeturn25search2turn27search5turn26search0turn26search1turn27search0turn27search2turn28search0turn28search1
-
-Note: The module weeks above total 56 weeks; the week‑by‑week plan below normalizes to 52 weeks by compressing Modules 11–12 into 8 weeks combined and keeping four review/capstone weeks interleaved.
-
-## Resource pack (primary sources first)
-
-### Module 1 resources
-| Resource | Type | Author or Org | Year | Why it is included | Link | Evidence |
-|---|---|---|---|---|---|---|
-| RFC 9110: HTTP Semantics | Standard (RFC) | IETF | 2022 | Defines HTTP semantics and terminology | `https://www.rfc-editor.org/rfc/rfc9110.html` | citeturn0search3 |
-| RFC 6749: OAuth 2.0 Authorization Framework | Standard (RFC) | IETF | 2012 | Defines OAuth 2.0 roles and flows | `https://www.rfc-editor.org/info/rfc6749` | citeturn0search1 |
-| Prometheus Overview | Primary (Docs) | Prometheus | n.d. | Defines metrics and monitoring concepts | `https://prometheus.io/docs/introduction/overview/` | citeturn14view0 |
-
-### Module 2 resources
-| Resource | Type | Author or Org | Year | Why it is included | Link | Evidence |
-|---|---|---|---|---|---|---|
-| AWS Well‑Architected Framework pillars | Primary (Docs) | AWS | n.d. | Defines AWS WAF pillars | `https://docs.aws.amazon.com/wellarchitected/latest/framework/the-pillars-of-the-framework.html` | citeturn3search7 |
-| Azure Well‑Architected Framework overview | Primary (Docs) | Microsoft | 2026 | Defines Azure WAF and pillars | `https://learn.microsoft.com/en-us/azure/well-architected/what-is-well-architected-framework` | citeturn2search1 |
-| Google Cloud Well‑Architected Framework | Primary (Docs) | Google Cloud | 2024 | Defines GCP WAF pillars | `https://cloud.google.com/architecture/framework` | citeturn1search1 |
-
-### Module 3 resources
-| Resource | Type | Author or Org | Year | Why it is included | Link | Evidence |
-|---|---|---|---|---|---|---|
-| Distributed Systems (3rd ed.) | Book | Maarten van Steen, Andrew S. Tanenbaum | 2017 | Canonical distributed systems text | `https://www.distributed-systems.net/index.php/books/ds3/` | citeturn22search2 |
-| Site Reliability Engineering | Book | Betsy Beyer, Chris Jones, Jennifer Petoff, Niall Richard Murphy | 2016 | Reliability perspective for distributed systems | `https://research.google/pubs/site-reliability-engineering-how-google-runs-production-systems/` | citeturn21search0 |
-| The Site Reliability Workbook | Book | Betsy Beyer, Niall Murphy, David Rensin, Stephen Thorne, Kent Kawahara | 2018 | Practical reliability methods | `https://research.google/pubs/the-site-reliability-workbook/` | citeturn21search1 |
-
-### Module 4 resources
-| Resource | Type | Author or Org | Year | Why it is included | Link | Evidence |
-|---|---|---|---|---|---|---|
-| Designing Data‑Intensive Applications | Book | Martin Kleppmann | 2017 | Canonical data systems text | `https://martin.kleppmann.com/2017/03/27/designing-data-intensive-applications.html` | citeturn22search0 |
-| PostgreSQL Documentation | Primary (Docs) | PostgreSQL | 2026 | Official relational DB docs | `https://www.postgresql.org/docs/` | citeturn5search4 |
-| MySQL 8.0 Reference Manual | Primary (Docs) | Oracle/MySQL | 2026 | Official MySQL manual | `https://dev.mysql.com/doc/mysql/8.0/en/` | citeturn17search0 |
-| MongoDB Documentation | Primary (Docs) | MongoDB | n.d. | Official document DB docs | `https://www.mongodb.com/docs/` | citeturn17search1 |
-| Apache Cassandra Documentation | Primary (Docs) | Apache Cassandra | n.d. | Official wide‑column DB docs | `https://cassandra.apache.org/doc/stable/` | citeturn15search1 |
-| Redis Documentation | Primary (Docs) | Redis | n.d. | Official Redis docs | `https://redis.io/docs/` | citeturn18view0 |
-
-### Module 5 resources
-| Resource | Type | Author or Org | Year | Why it is included | Link | Evidence |
-|---|---|---|---|---|---|---|
-| Apache Kafka Quickstart | Primary (Docs) | Apache Kafka | n.d. | Event streaming foundation | `https://kafka.apache.org/quickstart` | citeturn6search1 |
-| Apache Pulsar Docs | Primary (Docs) | Apache Pulsar | n.d. | Streaming + messaging docs | `https://pulsar.apache.org/docs/3.0.x/` | citeturn19search4 |
-| RabbitMQ Docs | Primary (Docs) | RabbitMQ | n.d. | Brokered messaging docs | `https://www.rabbitmq.com/docs` | citeturn19search1 |
-| NATS Docs | Primary (Docs) | NATS | n.d. | Cloud‑native messaging docs | `https://docs.nats.io/` | citeturn19search2 |
-
-### Module 6 resources
-| Resource | Type | Author or Org | Year | Why it is included | Link | Evidence |
-|---|---|---|---|---|---|---|
-| Kubernetes Documentation | Primary (Docs) | Kubernetes | n.d. | Container orchestration reference | `https://kubernetes.io/docs/` | citeturn0search4 |
-| Prometheus CNCF project page | Primary (Docs) | CNCF | n.d. | CNCF project context for metrics | `https://www.cncf.io/projects/prometheus/` | citeturn4search1 |
-| OpenTelemetry CNCF project page | Primary (Docs) | CNCF | n.d. | CNCF project context for telemetry | `https://www.cncf.io/projects/opentelemetry/` | citeturn4search0 |
-| Envoy graduation announcement | Primary (CNCF) | CNCF | 2018 | CNCF ecosystem reference | `https://www.cncf.io/announcements/2018/11/28/cncf-announces-envoy-graduation/` | citeturn3search0 |
-
-### Module 7 resources
-| Resource | Type | Author or Org | Year | Why it is included | Link | Evidence |
-|---|---|---|---|---|---|---|
-| OpenTelemetry Documentation | Primary (Docs) | OpenTelemetry | 2025 | Vendor‑neutral telemetry docs | `https://opentelemetry.io/docs/` | citeturn0search0 |
-| OpenTelemetry Specification | Standard | OpenTelemetry | 2025 | Formal telemetry spec | `https://opentelemetry.io/docs/specs/otel/` | citeturn5search3 |
-| OTLP Specification | Standard | OpenTelemetry | 2025 | Telemetry protocol | `https://opentelemetry.io/docs/specs/otlp/` | citeturn5search2 |
-| Prometheus Overview | Primary (Docs) | Prometheus | n.d. | Metrics system overview | `https://prometheus.io/docs/introduction/overview/` | citeturn14view0 |
-| Grafana Documentation | Primary (Docs) | Grafana | n.d. | Visualization and dashboards | `https://grafana.com/docs/grafana/latest/` | citeturn11search1 |
-| Datadog Documentation Guides | Primary (Docs) | Datadog | n.d. | Commercial observability docs | `https://docs.datadoghq.com/all_guides/` | citeturn12search8 |
-| New Relic Documentation | Primary (Docs) | New Relic | n.d. | Commercial observability docs | `https://docs.newrelic.com/` | citeturn10search2 |
-| Splunk Help Portal | Primary (Docs) | Splunk | 2026 | Central docs portal | `https://help.splunk.com/en/release-notes-and-updates/about-the-help-portal` | citeturn12search2 |
-| Honeycomb Documentation | Primary (Docs) | Honeycomb | n.d. | Observability vendor docs | `https://docs.honeycomb.io/` | citeturn10search0 |
-
-### Module 8 resources
-| Resource | Type | Author or Org | Year | Why it is included | Link | Evidence |
-|---|---|---|---|---|---|---|
-| Site Reliability Engineering | Book | Betsy Beyer, Chris Jones, Jennifer Petoff, Niall Richard Murphy | 2016 | Canonical SRE text | `https://research.google/pubs/site-reliability-engineering-how-google-runs-production-systems/` | citeturn21search0 |
-| The Site Reliability Workbook | Book | Betsy Beyer, Niall Murphy, David Rensin, Stephen Thorne, Kent Kawahara | 2018 | Hands‑on SRE practices | `https://research.google/pubs/the-site-reliability-workbook/` | citeturn21search1 |
-| Google SRE Resources Hub | Primary (Docs) | Google | n.d. | Official SRE library | `https://sre.google/resources/` | citeturn21search3 |
-
-### Module 9 resources
-| Resource | Type | Author or Org | Year | Why it is included | Link | Evidence |
-|---|---|---|---|---|---|---|
-| RFC 6749: OAuth 2.0 Authorization Framework | Standard (RFC) | IETF | 2012 | OAuth 2.0 definitions | `https://www.rfc-editor.org/info/rfc6749` | citeturn0search1 |
-| Security Engineering, 3rd Edition | Book | Ross Anderson | 2020 | Canonical security engineering text | `https://www.oreilly.com/library/view/security-engineering-3rd/9781119642787/` | citeturn24search2 |
-| Microsoft Entra ID documentation | Primary (Docs) | Microsoft | n.d. | Enterprise identity docs | `https://learn.microsoft.com/en-us/entra/identity/` | citeturn9search0 |
-| Auth0 Docs | Primary (Docs) | Auth0 | n.d. | Identity provider docs | `https://auth0.com/docs` | citeturn9search1 |
-| Okta Developer Docs | Primary (Docs) | Okta | n.d. | Identity provider docs | `https://developer.okta.com/` | citeturn9search4 |
-
-### Module 10 resources
-| Resource | Type | Author or Org | Year | Why it is included | Link | Evidence |
-|---|---|---|---|---|---|---|
-| Cloudflare Developer Docs | Primary (Docs) | Cloudflare | n.d. | Edge platform documentation | `https://developers.cloudflare.com/` | citeturn7search9 |
-| Fastly Documentation | Primary (Docs) | Fastly | n.d. | Edge delivery docs | `https://docs.fastly.com/` | citeturn8search3 |
-| Akamai TechDocs | Primary (Docs) | Akamai | n.d. | Edge services docs | `https://techdocs.akamai.com/` | citeturn8search2 |
-
-### Module 11 resources
-| Resource | Type | Author or Org | Year | Why it is included | Link | Evidence |
-|---|---|---|---|---|---|---|
-| AWS WAF Cost Optimization pillar | Primary (Docs) | AWS | n.d. | Cost optimization guidance | `https://docs.aws.amazon.com/wellarchitected/latest/framework/cost-optimization.html` | citeturn1search4 |
-| AWS WAF pillars | Primary (Docs) | AWS | n.d. | Pillar framework | `https://docs.aws.amazon.com/wellarchitected/latest/framework/the-pillars-of-the-framework.html` | citeturn3search7 |
-| Azure WAF overview | Primary (Docs) | Microsoft | 2026 | Azure pillars | `https://learn.microsoft.com/en-us/azure/well-architected/what-is-well-architected-framework` | citeturn2search1 |
-| Google Cloud WAF | Primary (Docs) | Google Cloud | 2024 | GCP pillars | `https://cloud.google.com/architecture/framework` | citeturn1search1 |
-
-### Module 12 resources
-| Resource | Type | Author or Org | Year | Why it is included | Link | Evidence |
-|---|---|---|---|---|---|---|
-| OpenAI API Models | Primary (Docs) | OpenAI | n.d. | Official model documentation | `https://platform.openai.com/docs/models` | citeturn25search2 |
-| Anthropic API Overview | Primary (Docs) | Anthropic | n.d. | Official API documentation | `https://docs.anthropic.com/en/api/getting-started` | citeturn27search5 |
-| Gemini API Docs | Primary (Docs) | Google | 2025 | Official Gemini API docs | `https://ai.google.dev/gemini-api/docs` | citeturn26search0 |
-| Amazon Bedrock Documentation | Primary (Docs) | AWS | n.d. | Official Bedrock docs | `https://aws.amazon.com/documentation-overview/bedrock/` | citeturn26search1 |
-| Pinecone Documentation | Primary (Docs) | Pinecone | n.d. | Vector DB docs | `https://docs.pinecone.io/` | citeturn27search0 |
-| Weaviate Documentation | Primary (Docs) | Weaviate | n.d. | Vector DB docs | `https://docs.weaviate.io/weaviate` | citeturn27search2 |
-| Milvus Documentation | Primary (Docs) | Milvus | n.d. | Vector DB docs | `https://milvus.io/docs` | citeturn28search0 |
-| pgvector GitHub repo | Primary (Repo) | pgvector | n.d. | Postgres vector extension | `https://github.com/pgvector/pgvector` | citeturn28search1 |
-
-## Week‑by‑week plan (52 weeks, 6–10 hours/week)
-
-Table references only the resources above.
-
-| Week | Topics | Reading/Viewing (from resources only) | Hands‑on tasks | Timed kata prompt | Deliverable to commit |
-|---|---|---|---|---|---|
-| 1 | HTTP semantics and caching | RFC 9110 | Build a minimal HTTP API and document request/response semantics | Design a low‑latency read API | `week-01/http-semantics.md` |
-| 2 | OAuth 2.0 roles and flows | RFC 6749 | Map auth flows for a multi‑tenant API | Design OAuth flow for SPA + API | `week-02/oauth-flow.md` |
-| 3 | Metrics concepts | Prometheus Overview | Define latency metrics and SLI candidates | Design a metrics schema for API | `week-03/metrics.md` |
-| 4 | Review week | Module 1 resources | Consolidate notes and revise kata | Longer kata: request path bottlenecks | `week-04/review.md` |
-| 5 | Well‑architected pillars | AWS/Azure/Google WAF | Build a pillar checklist | Design a cloud workload and tradeoffs | `week-05/waf-pillars.md` |
-| 6 | Reliability and security pillars | AWS/Azure/Google WAF | Draft risk/mitigation matrix | Design multi‑region reliability plan | `week-06/reliability-plan.md` |
-| 7 | Performance and cost pillars | AWS/Azure/Google WAF | Draft cost/perf tradeoffs | Design scaling and cost strategy | `week-07/cost-perf.md` |
-| 8 | Review week | Module 2 resources | Consolidate notes | Longer kata: cloud migration review | `week-08/review.md` |
-| 9 | DS foundations | Distributed Systems (3rd ed.) | Summarize coordination and replication | Design replication for KV store | `week-09/ds-notes.md` |
-|10 | Fault tolerance | Distributed Systems (3rd ed.) | Failure model matrix | Design failover strategy | `week-10/fault-tolerance.md` |
-|11 | Reliability practices | SRE book | Draft SLOs | Design SLOs for API | `week-11/slo.md` |
-|12 | Review week | Module 3 resources | Consolidate notes | Longer kata: distributed lock service | `week-12/review.md` |
-|13 | Capstone review A | Modules 1–3 resources | Consolidate learnings | Longer kata: end‑to‑end design | `week-13/capstone-a.md` |
-|14 | Data systems overview | DDIA | Storage decision matrix | Choose data model for SaaS | `week-14/ddia.md` |
-|15 | Relational systems | PostgreSQL + MySQL docs | Schema + index plan | Design relational schema | `week-15/relational.md` |
-|16 | Document and cache | MongoDB + Redis docs | Model doc vs cache use | Design document model | `week-16/document-cache.md` |
-|17 | Wide‑column | Cassandra docs | Data model notes | Design time‑series storage | `week-17/cassandra.md` |
-|18 | Review week | Module 4 resources | Consolidate notes | Longer kata: polyglot storage | `week-18/review.md` |
-|19 | Kafka fundamentals | Kafka Quickstart | Build a local pipeline plan | Design topic strategy | `week-19/kafka.md` |
-|20 | Pulsar vs RabbitMQ vs NATS | Pulsar/RabbitMQ/NATS docs | Compare semantics | Select messaging system | `week-20/messaging.md` |
-|21 | Streaming pipeline | Kafka + Pulsar docs | Define retention/replay | Design replay strategy | `week-21/streaming.md` |
-|22 | Review week | Module 5 resources | Consolidate notes | Longer kata: event pipeline design | `week-22/review.md` |
-|23 | Kubernetes basics | Kubernetes docs | Write manifests | Design K8s deployment | `week-23/k8s.md` |
-|24 | Telemetry on K8s | OpenTelemetry + Prometheus docs | Draft telemetry plan | Design K8s observability | `week-24/otel-k8s.md` |
-|25 | Cloud‑native ecosystem | CNCF project pages | Map ecosystem components | Design service mesh observability | `week-25/cncf.md` |
-|26 | Review week | Module 6 resources | Consolidate notes | Longer kata: multi‑service K8s | `week-26/review.md` |
-|27 | OTel spec + OTLP | OTel spec + OTLP | Define telemetry schema | Design OTLP pipeline | `week-27/otel-spec.md` |
-|28 | Metrics + dashboards | Prometheus + Grafana | Dashboard plan | Design alerting strategy | `week-28/metrics-dash.md` |
-|29 | Vendor observability | Datadog/New Relic/Splunk/Honeycomb docs | Compare vendor strengths | Vendor selection memo | `week-29/vendor-obs.md` |
-|30 | Review week | Module 7 resources | Consolidate notes | Longer kata: o11y redesign | `week-30/review.md` |
-|31 | SRE principles | SRE book | SLO draft | Design error budget | `week-31/sre.md` |
-|32 | SRE practices | SRE Workbook | Postmortem template | Design incident process | `week-32/postmortem.md` |
-|33 | SRE library | Google SRE resources | Find relevant SRE guides | Design reliability roadmap | `week-33/sre-library.md` |
-|34 | Review week | Module 8 resources | Consolidate notes | Longer kata: SLO policy | `week-34/review.md` |
-|35 | OAuth and security | RFC 6749 | Auth flow design | Design token lifecycle | `week-35/oauth.md` |
-|36 | Security engineering | Security Engineering 3rd ed. | Threat model | Security design review | `week-36/security.md` |
-|37 | Identity providers | Entra/Okta/Auth0 docs | IAM comparison | Identity provider selection | `week-37/identity.md` |
-|38 | Review week | Module 9 resources | Consolidate notes | Longer kata: auth architecture | `week-38/review.md` |
-|39 | Edge platforms | Cloudflare/Fastly/Akamai docs | Edge integration plan | Edge architecture design | `week-39/edge.md` |
-|40 | Delivery pipelines at edge | Cloudflare/Fastly/Akamai docs | API integration outline | Design edge routing | `week-40/delivery.md` |
-|41 | Review week | Module 10 resources | Consolidate notes | Longer kata: global delivery | `week-41/review.md` |
-|42 | Cost optimization | AWS WAF cost pillar | Cost model | Design cost‑aware scaling | `week-42/cost.md` |
-|43 | Pillar tradeoffs | AWS/Azure/Google WAF | Tradeoff analysis | Capacity plan | `week-43/capacity.md` |
-|44 | Review week | Module 11 resources | Consolidate notes | Longer kata: cost review | `week-44/review.md` |
-|45 | AI providers | OpenAI/Anthropic/Gemini/Bedrock docs | Provider comparison | AI provider selection | `week-45/ai-providers.md` |
-|46 | Vector databases | Pinecone/Weaviate/Milvus/pgvector docs | Vector DB comparison | RAG backend design | `week-46/vector-db.md` |
-|47 | AI service design | Module 12 resources | Evaluation plan | AI system design kata | `week-47/ai-design.md` |
-|48 | Review week | Module 12 resources | Consolidate notes | Longer kata: AI system review | `week-48/review.md` |
-|49 | Capstone 1 | Modules 1–11 resources | Build production service design | Full system design kata | `week-49/capstone-1.md` |
-|50 | Capstone 2 | Module 12 resources | Build AI service design | AI system design kata | `week-50/capstone-2.md` |
-|51 | Final review | All resources | Consolidate final notes | Comprehensive system review | `week-51/final-review.md` |
-|52 | Publish | All resources | Final polish | Final architecture walkthrough | `week-52/publish.md` |
-
-## Repository blueprint (files and templates)
-
-File tree
-```
-/README.md
-/curriculum.md
-/week-01
-/week-02
-/week-03
-/week-04
-/week-05
-/week-06
-/week-07
-/week-08
-/week-09
-/week-10
-/week-11
-/week-12
-/week-13
-/week-14
-/week-15
-/week-16
-/week-17
-/week-18
-/week-19
-/week-20
-/week-21
-/week-22
-/week-23
-/week-24
-/week-25
-/week-26
-/week-27
-/week-28
-/week-29
-/week-30
-/week-31
-/week-32
-/week-33
-/week-34
-/week-35
-/week-36
-/week-37
-/week-38
-/week-39
-/week-40
-/week-41
-/week-42
-/week-43
-/week-44
-/week-45
-/week-46
-/week-47
-/week-48
-/week-49
-/week-50
-/week-51
-/week-52
-/templates/system-design-kata.md
-/templates/adr.md
-/templates/incident-postmortem.md
-/templates/service-runbook.md
-/templates/threat-model.md
-/templates/slo-spec.md
-```
-
-Template: System design kata writeup
-```markdown
-# System Design Kata
-
-## Problem statement
-
-## Assumptions
-
-## Requirements
-
-## Constraints
-
-## High‑level architecture
-
-## Key decisions
-
-## Data model
-
-## Scaling and performance
-
-## Reliability and failure handling
-
-## Security considerations
-
-## Observability plan
-
-## Cost considerations
-
-## Tradeoffs and alternatives
-
-## Open questions
-```
-
-Template: Architecture decision record
-```markdown
-# ADR: <title>
-
-## Status
-Proposed | Accepted | Superseded
-
-## Context
-
-## Decision
-
-## Alternatives considered
-
-## Consequences
-```
-
-Template: Incident postmortem
-```markdown
-# Incident Postmortem
-
-## Summary
-
-## Impact
-
-## Timeline
-
-## Root cause
-
-## Detection and response
-
-## Resolution
-
-## What went well
-
-## What went wrong
-
-## Action items
-```
-
-Template: Service runbook
-```markdown
-# Service Runbook
-
-## Service overview
-
-## Dependencies
-
-## SLIs/SLOs
-
-## Dashboards and alerts
-
-## Common operations
-
-## Incident response steps
-
-## Rollback plan
-
-## Escalation contacts
-```
-
-Template: Threat model worksheet
-```markdown
-# Threat Model
-
-## System overview
-
-## Assets
-
-## Trust boundaries
-
-## Entry points
-
-## Threats
-
-## Mitigations
-
-## Residual risks
-
-## Security tests
-```
-
-Template: SLO and error budget spec
-```markdown
-# SLO and Error Budget Spec
-
-## Service description
-
-## SLIs
-
-## SLO targets
-
-## Error budget policy
-
-## Measurement and reporting
-
-## Review cadence
-```
-
-README (repo usage)
-```markdown
-# 52‑Week Modern System Design Path
-
-## How to use this repo
-- Follow the week‑by‑week plan in `curriculum.md`.
-- Each week has a folder `week-XX` with your deliverable.
-- Use templates in `/templates` for writeups.
-
-## Weekly flow
-1. Read the assigned resources for the week from `curriculum.md`.
-2. Complete the hands‑on tasks.
-3. Write the kata and deliverable in the week folder.
-4. Commit weekly artifacts.
-```
-
-## Accuracy audit (final gate)
-Issues found and corrections
-- CI/CD major vendors and official docs could not be verified with citations in this run. Per the hard requirement “No guessing,” they were excluded. This leaves the CI/CD domain under‑represented. Not verified.
-- Azure OpenAI documentation could not be verified due to tool call limits. It was excluded. Not verified.
-
-Final statement
-“All included claims are cited. Any uncited statements have been removed.”
-</pre>
-  </main>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-badge">SD</div>
+        Learning Content
+      </div>
+      <nav class="nav">
+        <a class="active" href="#">Learning Path</a>
+        <a href="curriculum.md">Full Curriculum</a>
+        <a href="templates/system-design-kata.md">Templates</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="topbar">
+        <div class="title-block">
+          <h1>System Design 52 Weeks</h1>
+          <p>Check off every concept, finish each module project, and watch your progress bar climb.</p>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-label">
+            <span>Overall Progress</span>
+            <span id="progress-text">0%</span>
+          </div>
+          <div class="progress-bar"><span id="progress-bar"></span></div>
+        </div>
+      </div>
+
+      <section class="grid" id="modules">
+        <!-- Cards generated by JS -->
+      </section>
+
+      <div class="footer">
+        Progress is saved locally in your browser. Refresh to keep your checkmarks.
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const modules = [
+      {
+        title: "Performance + Latency Foundations",
+        weeks: "Weeks 1–4",
+        concepts: ["HTTP semantics and caching", "OAuth 2.0 roles and flows", "Latency budgets and SLIs"],
+        project: "Build and benchmark a minimal HTTP API with a documented latency budget and OAuth flow diagram."
+      },
+      {
+        title: "Cloud Architecture + Networking",
+        weeks: "Weeks 5–8",
+        concepts: ["Well‑architected pillars", "Network boundary diagrams", "Multi‑region tradeoffs"],
+        project: "Deliver a well‑architected review checklist and a pillar‑mapped architecture diagram."
+      },
+      {
+        title: "Distributed Systems Foundations",
+        weeks: "Weeks 9–12",
+        concepts: ["Replication strategies", "Fault tolerance models", "Consistency tradeoffs"],
+        project: "Write a replication strategy memo for a key‑value store with explicit failure models."
+      },
+      {
+        title: "Data Systems",
+        weeks: "Weeks 13–16",
+        concepts: ["Relational vs document tradeoffs", "Wide‑column modeling", "Caching patterns"],
+        project: "Design a multi‑tenant storage layer with schema, indexes, and cache plan."
+      },
+      {
+        title: "Event Streaming + Messaging",
+        weeks: "Weeks 17–20",
+        concepts: ["Topic and partition design", "Delivery semantics", "Retention + replay"],
+        project: "Design an event pipeline with durability and replay strategy."
+      },
+      {
+        title: "Kubernetes + Cloud‑Native",
+        weeks: "Weeks 21–24",
+        concepts: ["Kubernetes objects", "Scheduling + resilience", "Telemetry on K8s"],
+        project: "Deploy a stateless service with probes, resources, and telemetry plan."
+      },
+      {
+        title: "Observability Systems",
+        weeks: "Weeks 25–28",
+        concepts: ["OpenTelemetry signals", "OTLP pipelines", "Dashboards + alerting"],
+        project: "Instrument a service and define a telemetry schema plus export pipeline."
+      },
+      {
+        title: "Reliability Engineering (SRE)",
+        weeks: "Weeks 29–32",
+        concepts: ["SLOs and error budgets", "Incident response", "Reliability roadmaps"],
+        project: "Deliver SLOs, error budget policy, and a postmortem template."
+      },
+      {
+        title: "Security + Identity",
+        weeks: "Weeks 33–36",
+        concepts: ["OAuth threat modeling", "Identity provider selection", "Security engineering principles"],
+        project: "Create a threat model and token lifecycle plan for a service."
+      },
+      {
+        title: "Edge + Delivery Platforms",
+        weeks: "Weeks 37–40",
+        concepts: ["Edge routing", "Cache strategy", "Global delivery design"],
+        project: "Write an edge integration plan with routing and cache policy."
+      },
+      {
+        title: "Cost + Capacity Planning",
+        weeks: "Weeks 41–44",
+        concepts: ["Cost optimization pillars", "Capacity thresholds", "Perf/cost tradeoffs"],
+        project: "Build a cost model and capacity plan for a multi‑region service."
+      },
+      {
+        title: "AI Systems Design",
+        weeks: "Weeks 45–52",
+        concepts: ["Provider evaluation", "Vector DB selection", "Evaluation harness"],
+        project: "Design a RAG service with evaluation plan and audit logging."
+      }
+    ];
+
+    const saved = JSON.parse(localStorage.getItem("sd-progress") || "{}");
+
+    const modulesEl = document.getElementById("modules");
+
+    modules.forEach((mod, modIndex) => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.dataset.module = modIndex;
+
+      const checklistItems = mod.concepts.map((concept, idx) => {
+        const id = `m${modIndex}-c${idx}`;
+        const checked = saved[id] ? "checked" : "";
+        return `
+          <li>
+            <label>
+              <input type="checkbox" data-key="${id}" ${checked} />
+              <span>${concept}</span>
+            </label>
+          </li>`;
+      }).join("");
+
+      const projectId = `m${modIndex}-project`;
+      const projectChecked = saved[projectId] ? "checked" : "";
+
+      card.innerHTML = `
+        <div class="module-meta">
+          <h3>${mod.title}</h3>
+          <span class="pill">${mod.weeks}</span>
+        </div>
+        <ul class="checklist">${checklistItems}</ul>
+        <div class="project">
+          <label>
+            <input type="checkbox" data-key="${projectId}" ${projectChecked} />
+            <strong>Module Project:</strong> ${mod.project}
+          </label>
+        </div>
+        <div class="module-progress">
+          <div class="bar"><span></span></div>
+          <span class="module-percent">0%</span>
+        </div>
+      `;
+
+      modulesEl.appendChild(card);
+    });
+
+    function updateProgress() {
+      const inputs = document.querySelectorAll("input[type='checkbox'][data-key]");
+      const total = inputs.length;
+      const checked = Array.from(inputs).filter(i => i.checked).length;
+      const percent = total === 0 ? 0 : Math.round((checked / total) * 100);
+      document.getElementById("progress-bar").style.width = `${percent}%`;
+      document.getElementById("progress-text").textContent = `${percent}%`;
+
+      document.querySelectorAll(".card").forEach(card => {
+        const cardInputs = card.querySelectorAll("input[type='checkbox'][data-key]");
+        const cardChecked = Array.from(cardInputs).filter(i => i.checked).length;
+        const cardPercent = cardInputs.length === 0 ? 0 : Math.round((cardChecked / cardInputs.length) * 100);
+        card.querySelector(".module-progress .bar span").style.width = `${cardPercent}%`;
+        card.querySelector(".module-percent").textContent = `${cardPercent}%`;
+      });
+    }
+
+    document.addEventListener("change", (e) => {
+      if (e.target.matches("input[type='checkbox'][data-key]")) {
+        saved[e.target.dataset.key] = e.target.checked;
+        localStorage.setItem("sd-progress", JSON.stringify(saved));
+        updateProgress();
+      }
+    });
+
+    updateProgress();
+  </script>
 </body>
 </html>

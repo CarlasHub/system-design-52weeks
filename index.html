@@ -5,26 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>System Design 52 Weeks</title>
   <style>
-    @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
 
     :root {
       color-scheme: dark;
-      --bg: #0b0c10;
-      --ink: #f5f7ff;
-      --muted: #9aa0b5;
-      --card: #151823;
+      --bg: #0a0b10;
+      --ink: #f4f6ff;
+      --muted: #98a0b6;
+      --card: #121622;
       --line: #23283a;
-      --accent: #52b3ff;
-      --accent-soft: rgba(82, 179, 255, 0.12);
+      --accent: #63c0ff;
+      --accent-soft: rgba(99, 192, 255, 0.18);
       --progress: #38d996;
       --project: #ff8a5b;
-      --shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+      --glow: 0 0 0 1px rgba(99, 192, 255, 0.15), 0 12px 30px rgba(14, 24, 40, 0.6);
+      --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     }
 
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      background: radial-gradient(circle at top, #121625 0%, #0b0c10 45%, #07080d 100%);
+      background:
+        radial-gradient(circle at 12% 18%, rgba(90, 120, 255, 0.12), transparent 40%),
+        radial-gradient(circle at 85% 10%, rgba(72, 200, 255, 0.1), transparent 35%),
+        radial-gradient(circle at 70% 80%, rgba(56, 217, 150, 0.08), transparent 40%),
+        #0a0b10;
       color: var(--ink);
       font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
     }
@@ -37,8 +43,11 @@
 
     .sidebar {
       padding: 28px 20px;
-      background: #0f121d;
+      background: linear-gradient(180deg, #0f121d 0%, #0b0d14 100%);
       border-right: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      height: 100vh;
     }
 
     .brand {
@@ -75,6 +84,7 @@
       align-items: center;
       gap: 8px;
       font-size: 14px;
+      transition: all 0.2s ease;
     }
 
     .nav a.active {
@@ -82,6 +92,10 @@
       color: #9ed9ff;
       font-weight: 600;
       border: 1px solid rgba(82, 179, 255, 0.25);
+    }
+    .nav a:hover {
+      background: rgba(255, 255, 255, 0.03);
+      color: #c9d1e8;
     }
 
     .content {
@@ -105,6 +119,24 @@
     .title-block p {
       margin: 8px 0 0;
       color: var(--muted);
+    }
+
+    .action-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .pill-btn {
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: #151a27;
+      color: #d6def7;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
     }
 
     .progress-wrap {
@@ -153,6 +185,12 @@
       display: grid;
       gap: 12px;
       border: 1px solid #1f2536;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(99, 192, 255, 0.25);
+      box-shadow: var(--glow);
     }
 
     .card h3 {
@@ -162,6 +200,9 @@
 
     .card small {
       color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 10px;
     }
 
     .module-meta {
@@ -194,6 +235,32 @@
       font-size: 14px;
     }
 
+    .checklist input[type="checkbox"] {
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 5px;
+      border: 1px solid #2d3550;
+      background: #0f1320;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.4);
+    }
+
+    .checklist input[type="checkbox"]:checked {
+      background: linear-gradient(135deg, #4ad7ff 0%, #3dd98f 100%);
+      border-color: transparent;
+    }
+
+    .checklist input[type="checkbox"]:checked::after {
+      content: "✓";
+      font-size: 12px;
+      color: #061019;
+      font-weight: 700;
+      line-height: 1;
+    }
+
     .project {
       border-left: 4px solid var(--project);
       padding: 10px 12px;
@@ -201,6 +268,10 @@
       border-radius: 12px;
       font-size: 13px;
       color: #f7c1ab;
+    }
+
+    .project input[type="checkbox"] {
+      margin-right: 8px;
     }
 
     .module-progress {
@@ -234,7 +305,7 @@
 
     @media (max-width: 900px) {
       .shell { grid-template-columns: 1fr; }
-      .sidebar { border-right: none; border-bottom: 1px solid var(--line); }
+      .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--line); }
       .topbar { flex-direction: column; align-items: flex-start; }
     }
   </style>
@@ -258,6 +329,10 @@
         <div class="title-block">
           <h1>System Design 52 Weeks</h1>
           <p>Check off every concept, finish each module project, and watch your progress bar climb.</p>
+          <div class="action-row">
+            <span class="pill-btn">Progress synced locally</span>
+            <span class="pill-btn">12 Modules</span>
+          </div>
         </div>
         <div class="progress-wrap">
           <div class="progress-label">

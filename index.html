@@ -280,73 +280,241 @@
       {
         title: "Performance + Latency Foundations",
         weeks: "Weeks 1–4",
-        concepts: ["HTTP semantics and caching", "OAuth 2.0 roles and flows", "Latency budgets and SLIs"],
+        outcomes: [
+          "Derive a latency budget for an HTTP API",
+          "Explain OAuth 2.0 roles and flows",
+          "Define SLIs for latency and throughput"
+        ],
+        concepts: [
+          "HTTP semantics and caching",
+          "OAuth 2.0 authorization basics",
+          "Latency budgets and critical path analysis"
+        ],
+        assessment: [
+          "Latency budget table",
+          "OAuth flow diagram",
+          "Metric definitions for SLIs"
+        ],
         project: "Build and benchmark a minimal HTTP API with a documented latency budget and OAuth flow diagram."
       },
       {
         title: "Cloud Architecture + Networking",
         weeks: "Weeks 5–8",
-        concepts: ["Well‑architected pillars", "Network boundary diagrams", "Multi‑region tradeoffs"],
+        outcomes: [
+          "Map architecture decisions to well‑architected pillars",
+          "Produce a cloud network boundary diagram",
+          "Explain regional vs multi‑region tradeoffs"
+        ],
+        concepts: [
+          "Well‑architected pillars",
+          "Trust boundaries and network segmentation",
+          "Availability tradeoffs by topology"
+        ],
+        assessment: [
+          "Pillar‑aligned review checklist",
+          "Architecture diagram with risks",
+          "Tradeoff notes"
+        ],
         project: "Deliver a well‑architected review checklist and a pillar‑mapped architecture diagram."
       },
       {
         title: "Distributed Systems Foundations",
         weeks: "Weeks 9–12",
-        concepts: ["Replication strategies", "Fault tolerance models", "Consistency tradeoffs"],
+        outcomes: [
+          "Explain replication strategies",
+          "Describe fault models",
+          "Summarize consistency tradeoffs"
+        ],
+        concepts: [
+          "Replication strategies",
+          "Fault tolerance models",
+          "Consistency and coordination"
+        ],
+        assessment: [
+          "Failure model summary",
+          "Replication choice rationale",
+          "Consistency tradeoff notes"
+        ],
         project: "Write a replication strategy memo for a key‑value store with explicit failure models."
       },
       {
         title: "Data Systems",
         weeks: "Weeks 13–16",
-        concepts: ["Relational vs document tradeoffs", "Wide‑column modeling", "Caching patterns"],
+        outcomes: [
+          "Choose storage models for workloads",
+          "Explain relational vs document tradeoffs",
+          "Design cache usage"
+        ],
+        concepts: [
+          "Relational vs document tradeoffs",
+          "Wide‑column modeling",
+          "Caching patterns"
+        ],
+        assessment: [
+          "Storage decision matrix",
+          "Schema and index rationale",
+          "Cache strategy summary"
+        ],
         project: "Design a multi‑tenant storage layer with schema, indexes, and cache plan."
       },
       {
         title: "Event Streaming + Messaging",
         weeks: "Weeks 17–20",
-        concepts: ["Topic and partition design", "Delivery semantics", "Retention + replay"],
+        outcomes: [
+          "Design streaming pipelines",
+          "Define delivery semantics",
+          "Plan retention and replay"
+        ],
+        concepts: [
+          "Topic and partition design",
+          "Delivery semantics",
+          "Retention and replay"
+        ],
+        assessment: [
+          "Pipeline diagram",
+          "Delivery guarantee notes",
+          "Replay plan"
+        ],
         project: "Design an event pipeline with durability and replay strategy."
       },
       {
         title: "Kubernetes + Cloud‑Native",
         weeks: "Weeks 21–24",
-        concepts: ["Kubernetes objects", "Scheduling + resilience", "Telemetry on K8s"],
+        outcomes: [
+          "Describe Kubernetes objects",
+          "Plan scheduling and resilience",
+          "Outline telemetry collection"
+        ],
+        concepts: [
+          "Kubernetes objects",
+          "Scheduling + resilience",
+          "Telemetry on K8s"
+        ],
+        assessment: [
+          "Deployment manifests",
+          "Probe and resource plan",
+          "Telemetry plan"
+        ],
         project: "Deploy a stateless service with probes, resources, and telemetry plan."
       },
       {
         title: "Observability Systems",
         weeks: "Weeks 25–28",
-        concepts: ["OpenTelemetry signals", "OTLP pipelines", "Dashboards + alerting"],
+        outcomes: [
+          "Define telemetry signals",
+          "Design an OTLP pipeline",
+          "Draft alerting rules"
+        ],
+        concepts: [
+          "OpenTelemetry signals",
+          "OTLP pipelines",
+          "Dashboards + alerting"
+        ],
+        assessment: [
+          "Telemetry schema",
+          "Export pipeline notes",
+          "Alerting plan"
+        ],
         project: "Instrument a service and define a telemetry schema plus export pipeline."
       },
       {
         title: "Reliability Engineering (SRE)",
         weeks: "Weeks 29–32",
-        concepts: ["SLOs and error budgets", "Incident response", "Reliability roadmaps"],
+        outcomes: [
+          "Define SLOs and error budgets",
+          "Plan incident response",
+          "Build a reliability roadmap"
+        ],
+        concepts: [
+          "SLOs and error budgets",
+          "Incident response",
+          "Reliability roadmaps"
+        ],
+        assessment: [
+          "SLO spec",
+          "Postmortem template",
+          "Reliability roadmap"
+        ],
         project: "Deliver SLOs, error budget policy, and a postmortem template."
       },
       {
         title: "Security + Identity",
         weeks: "Weeks 33–36",
-        concepts: ["OAuth threat modeling", "Identity provider selection", "Security engineering principles"],
+        outcomes: [
+          "Threat‑model a service",
+          "Define OAuth token lifecycle",
+          "Compare identity providers"
+        ],
+        concepts: [
+          "OAuth threat modeling",
+          "Identity provider selection",
+          "Security engineering principles"
+        ],
+        assessment: [
+          "Threat model worksheet",
+          "Token lifecycle notes",
+          "Identity provider memo"
+        ],
         project: "Create a threat model and token lifecycle plan for a service."
       },
       {
         title: "Edge + Delivery Platforms",
         weeks: "Weeks 37–40",
-        concepts: ["Edge routing", "Cache strategy", "Global delivery design"],
+        outcomes: [
+          "Explain edge routing patterns",
+          "Plan cache policies",
+          "Design global delivery"
+        ],
+        concepts: [
+          "Edge routing",
+          "Cache strategy",
+          "Global delivery design"
+        ],
+        assessment: [
+          "Edge routing plan",
+          "Cache policy notes",
+          "Delivery diagram"
+        ],
         project: "Write an edge integration plan with routing and cache policy."
       },
       {
         title: "Cost + Capacity Planning",
         weeks: "Weeks 41–44",
-        concepts: ["Cost optimization pillars", "Capacity thresholds", "Perf/cost tradeoffs"],
+        outcomes: [
+          "Build a cost model",
+          "Set capacity thresholds",
+          "Analyze perf/cost tradeoffs"
+        ],
+        concepts: [
+          "Cost optimization pillars",
+          "Capacity thresholds",
+          "Perf/cost tradeoffs"
+        ],
+        assessment: [
+          "Cost model",
+          "Capacity plan",
+          "Tradeoff analysis"
+        ],
         project: "Build a cost model and capacity plan for a multi‑region service."
       },
       {
         title: "AI Systems Design",
         weeks: "Weeks 45–52",
-        concepts: ["Provider evaluation", "Vector DB selection", "Evaluation harness"],
+        outcomes: [
+          "Evaluate providers",
+          "Choose a vector database",
+          "Design an evaluation harness"
+        ],
+        concepts: [
+          "Provider evaluation",
+          "Vector DB selection",
+          "Evaluation harness"
+        ],
+        assessment: [
+          "Provider comparison",
+          "Vector DB rationale",
+          "Evaluation plan"
+        ],
         project: "Design a RAG service with evaluation plan and audit logging."
       }
     ];
@@ -360,18 +528,22 @@
       card.className = "card";
       card.dataset.module = modIndex;
 
-      const checklistItems = mod.concepts.map((concept, idx) => {
+      const sectionList = (items, keyPrefix) => items.map((item, idx) => {
         const id = `m${modIndex}-c${idx}`;
-        const checked = saved[id] ? "checked" : "";
+        const key = `${keyPrefix}-${id}`;
+        const checked = saved[key] ? "checked" : "";
         return `
           <li>
             <label>
-              <input type="checkbox" data-key="${id}" ${checked} />
-              <span>${concept}</span>
+              <input type="checkbox" data-key="${key}" ${checked} />
+              <span>${item}</span>
             </label>
           </li>`;
       }).join("");
 
+      const outcomesItems = sectionList(mod.outcomes, "outcome");
+      const conceptItems = sectionList(mod.concepts, "concept");
+      const assessmentItems = sectionList(mod.assessment, "assessment");
       const projectId = `m${modIndex}-project`;
       const projectChecked = saved[projectId] ? "checked" : "";
 
@@ -380,7 +552,18 @@
           <h3>${mod.title}</h3>
           <span class="pill">${mod.weeks}</span>
         </div>
-        <ul class="checklist">${checklistItems}</ul>
+        <div>
+          <small>Outcomes</small>
+          <ul class="checklist">${outcomesItems}</ul>
+        </div>
+        <div>
+          <small>Core Concepts</small>
+          <ul class="checklist">${conceptItems}</ul>
+        </div>
+        <div>
+          <small>Assessment</small>
+          <ul class="checklist">${assessmentItems}</ul>
+        </div>
         <div class="project">
           <label>
             <input type="checkbox" data-key="${projectId}" ${projectChecked} />

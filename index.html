@@ -227,13 +227,26 @@
       list-style: none;
     }
 
-    .checklist label {
+    .checklist details {
+      border-radius: 10px;
+      padding: 6px 8px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid transparent;
+    }
+    .checklist details[open] {
+      border-color: rgba(99, 192, 255, 0.2);
+      background: rgba(99, 192, 255, 0.06);
+    }
+    .checklist summary {
+      list-style: none;
+      cursor: pointer;
       display: grid;
-      grid-template-columns: 18px 1fr;
+      grid-template-columns: 18px 1fr auto;
       gap: 8px;
-      align-items: start;
+      align-items: center;
       font-size: 14px;
     }
+    .checklist summary::-webkit-details-marker { display: none; }
 
     .checklist input[type="checkbox"] {
       appearance: none;
@@ -373,6 +386,11 @@
           "OAuth flow diagram",
           "Metric definitions for SLIs"
         ],
+        resources: [
+          { name: "RFC 9110: HTTP Semantics", url: "https://www.rfc-editor.org/rfc/rfc9110.html" },
+          { name: "RFC 6749: OAuth 2.0 Authorization Framework", url: "https://www.rfc-editor.org/info/rfc6749" },
+          { name: "Prometheus Overview", url: "https://prometheus.io/docs/introduction/overview/" }
+        ],
         project: "Build and benchmark a minimal HTTP API with a documented latency budget and OAuth flow diagram."
       },
       {
@@ -392,6 +410,11 @@
           "Pillar‑aligned review checklist",
           "Architecture diagram with risks",
           "Tradeoff notes"
+        ],
+        resources: [
+          { name: "AWS Well-Architected Framework", url: "https://docs.aws.amazon.com/wellarchitected/latest/framework/the-pillars-of-the-framework.html" },
+          { name: "Azure Well-Architected Framework", url: "https://learn.microsoft.com/en-us/azure/well-architected/what-is-well-architected-framework" },
+          { name: "Google Cloud Architecture Framework", url: "https://cloud.google.com/architecture/framework" }
         ],
         project: "Deliver a well‑architected review checklist and a pillar‑mapped architecture diagram."
       },
@@ -413,6 +436,9 @@
           "Replication choice rationale",
           "Consistency tradeoff notes"
         ],
+        resources: [
+          { name: "Distributed Systems (3rd ed.)", url: "https://www.distributed-systems.net/index.php/books/ds3/" }
+        ],
         project: "Write a replication strategy memo for a key‑value store with explicit failure models."
       },
       {
@@ -432,6 +458,13 @@
           "Storage decision matrix",
           "Schema and index rationale",
           "Cache strategy summary"
+        ],
+        resources: [
+          { name: "Designing Data-Intensive Applications", url: "https://martin.kleppmann.com/2017/03/27/designing-data-intensive-applications.html" },
+          { name: "PostgreSQL Docs", url: "https://www.postgresql.org/docs/" },
+          { name: "MongoDB Docs", url: "https://www.mongodb.com/docs/" },
+          { name: "Apache Cassandra Docs", url: "https://cassandra.apache.org/doc/stable/" },
+          { name: "Redis Docs", url: "https://redis.io/docs/" }
         ],
         project: "Design a multi‑tenant storage layer with schema, indexes, and cache plan."
       },
@@ -453,6 +486,12 @@
           "Delivery guarantee notes",
           "Replay plan"
         ],
+        resources: [
+          { name: "Apache Kafka Quickstart", url: "https://kafka.apache.org/quickstart" },
+          { name: "Apache Pulsar Docs", url: "https://pulsar.apache.org/docs/3.0.x/" },
+          { name: "RabbitMQ Docs", url: "https://www.rabbitmq.com/docs" },
+          { name: "NATS Docs", url: "https://docs.nats.io/" }
+        ],
         project: "Design an event pipeline with durability and replay strategy."
       },
       {
@@ -472,6 +511,11 @@
           "Deployment manifests",
           "Probe and resource plan",
           "Telemetry plan"
+        ],
+        resources: [
+          { name: "Kubernetes Docs", url: "https://kubernetes.io/docs/" },
+          { name: "OpenTelemetry Docs", url: "https://opentelemetry.io/docs/" },
+          { name: "Prometheus Overview", url: "https://prometheus.io/docs/introduction/overview/" }
         ],
         project: "Deploy a stateless service with probes, resources, and telemetry plan."
       },
@@ -493,6 +537,12 @@
           "Export pipeline notes",
           "Alerting plan"
         ],
+        resources: [
+          { name: "OpenTelemetry Docs", url: "https://opentelemetry.io/docs/" },
+          { name: "OTel Spec", url: "https://opentelemetry.io/docs/specs/otel/" },
+          { name: "OTLP Spec", url: "https://opentelemetry.io/docs/specs/otlp/" },
+          { name: "Grafana Docs", url: "https://grafana.com/docs/grafana/latest/" }
+        ],
         project: "Instrument a service and define a telemetry schema plus export pipeline."
       },
       {
@@ -512,6 +562,11 @@
           "SLO spec",
           "Postmortem template",
           "Reliability roadmap"
+        ],
+        resources: [
+          { name: "Site Reliability Engineering", url: "https://research.google/pubs/site-reliability-engineering-how-google-runs-production-systems/" },
+          { name: "The Site Reliability Workbook", url: "https://research.google/pubs/the-site-reliability-workbook/" },
+          { name: "Google SRE Resources", url: "https://sre.google/resources/" }
         ],
         project: "Deliver SLOs, error budget policy, and a postmortem template."
       },
@@ -533,6 +588,12 @@
           "Token lifecycle notes",
           "Identity provider memo"
         ],
+        resources: [
+          { name: "RFC 6749: OAuth 2.0", url: "https://www.rfc-editor.org/info/rfc6749" },
+          { name: "Microsoft Entra ID Docs", url: "https://learn.microsoft.com/en-us/entra/identity/" },
+          { name: "Auth0 Docs", url: "https://auth0.com/docs" },
+          { name: "Okta Developer Docs", url: "https://developer.okta.com/" }
+        ],
         project: "Create a threat model and token lifecycle plan for a service."
       },
       {
@@ -552,6 +613,11 @@
           "Edge routing plan",
           "Cache policy notes",
           "Delivery diagram"
+        ],
+        resources: [
+          { name: "Cloudflare Developers", url: "https://developers.cloudflare.com/" },
+          { name: "Fastly Docs", url: "https://docs.fastly.com/" },
+          { name: "Akamai TechDocs", url: "https://techdocs.akamai.com/" }
         ],
         project: "Write an edge integration plan with routing and cache policy."
       },
@@ -573,6 +639,11 @@
           "Capacity plan",
           "Tradeoff analysis"
         ],
+        resources: [
+          { name: "AWS Cost Optimization Pillar", url: "https://docs.aws.amazon.com/wellarchitected/latest/framework/cost-optimization.html" },
+          { name: "Azure Well-Architected Framework", url: "https://learn.microsoft.com/en-us/azure/well-architected/what-is-well-architected-framework" },
+          { name: "Google Cloud Architecture Framework", url: "https://cloud.google.com/architecture/framework" }
+        ],
         project: "Build a cost model and capacity plan for a multi‑region service."
       },
       {
@@ -593,6 +664,16 @@
           "Vector DB rationale",
           "Evaluation plan"
         ],
+        resources: [
+          { name: "OpenAI Models", url: "https://platform.openai.com/docs/models" },
+          { name: "Anthropic API", url: "https://docs.anthropic.com/en/api/getting-started" },
+          { name: "Gemini API Docs", url: "https://ai.google.dev/gemini-api/docs" },
+          { name: "Amazon Bedrock Docs", url: "https://aws.amazon.com/documentation-overview/bedrock/" },
+          { name: "Pinecone Docs", url: "https://docs.pinecone.io/" },
+          { name: "Weaviate Docs", url: "https://docs.weaviate.io/weaviate" },
+          { name: "Milvus Docs", url: "https://milvus.io/docs" },
+          { name: "pgvector", url: "https://github.com/pgvector/pgvector" }
+        ],
         project: "Design a RAG service with evaluation plan and audit logging."
       }
     ];
@@ -606,16 +687,26 @@
       card.className = "card";
       card.dataset.module = modIndex;
 
+      const renderResources = (resources) => {
+        if (!resources || resources.length === 0) return "";
+        const links = resources.map(r => `<a href="${r.url}" target="_blank" rel="noreferrer">${r.name}</a>`).join("");
+        return `<div class="resource-links">${links}</div>`;
+      };
+
       const sectionList = (items, keyPrefix) => items.map((item, idx) => {
-        const id = `m${modIndex}-c${idx}`;
+        const id = `m${modIndex}-${keyPrefix}-${idx}`;
         const key = `${keyPrefix}-${id}`;
         const checked = saved[key] ? "checked" : "";
         return `
           <li>
-            <label>
-              <input type="checkbox" data-key="${key}" ${checked} />
-              <span>${item}</span>
-            </label>
+            <details>
+              <summary>
+                <input type="checkbox" data-key="${key}" ${checked} />
+                <span>${item}</span>
+                <span class="pill">resources</span>
+              </summary>
+              ${renderResources(mod.resources)}
+            </details>
           </li>`;
       }).join("");
 
@@ -686,3 +777,16 @@
   </script>
 </body>
 </html>
+    .resource-links {
+      margin: 8px 0 0 26px;
+      font-size: 12px;
+      color: var(--muted);
+      display: grid;
+      gap: 6px;
+      font-family: var(--mono);
+    }
+    .resource-links a {
+      color: #9ed9ff;
+      text-decoration: none;
+    }
+    .resource-links a:hover { text-decoration: underline; }

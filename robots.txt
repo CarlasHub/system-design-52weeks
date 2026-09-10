@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://carlashub.github.io/system-design-52weeks/sitemap.xml
